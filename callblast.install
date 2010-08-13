@@ -1,0 +1,51 @@
+<?php 
+/**
+ * @file
+ *  Install Call Blast module.
+ */
+
+/**
+ * Implementation of hook_install().
+ */
+function callblast_install() {
+  drupal_install_schema('callblast');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function callblast_uninstall() {
+  drupal_uninstall_schema('callblast');
+}
+
+/**
+ * Implementation of hook_schema().
+ */
+function callblast_schema() {
+  /**
+   * callblast_call table
+   * 
+   * This table keeps track of which voipcall nodes
+   * belong to which callblast nodes. That is, 
+   * which calls are part of which callblast. 
+   */
+  $schema['callblast_call'] = array(
+    'fields' => array(
+      'callblast_nid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'default' => 0,
+        'not null' => TRUE,
+      ),
+      'voipcall_nid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'default' => 0,
+        'not null' => TRUE,
+      ),
+    ), 
+    'primary key' => array('callblast_nid', 'voipcall_nid'),
+  );
+
+  return $schema;
+}

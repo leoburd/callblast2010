@@ -1,0 +1,111 @@
+<?php
+
+include_once('calllist.features.inc');
+
+/**
+ * Implementation of hook_callblast_list().
+ */
+function calllist_callblast_list() {
+  $lists = array();
+  $result = db_query("SELECT nid, title FROM {node} WHERE type = 'calllist'");
+  while ($list = db_fetch_object($result)) {
+    $id = 'calllist_' . $list->nid;
+    $name = t($list->title);
+    $lists[$id] = $name; 
+  }
+  
+  return $lists;
+}
+
+/**
+ * Implementation of hook_callblast_get_list().
+ */
+function calllist_callblast_get_list($list_name) {
+  // Get ID from list name.
+  // List name should be "modulename_" concatenated with "id".
+  $nid = substr($list_name, 9);
+  
+  // Get numbers for selected list
+  $result = db_query("SELECT nid FROM {node} WHERE nid = %d", $nid);
+  $node = node_load($nid);
+  $i = 0;
+  $list = array();
+  foreach ($node->field_calllist_phone_numbers as $num) {
+    $destination = explode(',', $num['value']);
+    $list[$i]['destination'] = $destination[0]; 
+    $list[$i]['name'] = ($destination[1]) ? trim($destination[1]) : t('not available');
+    $i++;
+  } 
+
+  return $list;
+}
+
+/**
+ * Implementation of hook_callblast_get_title().
+ * 
+ * todo add to documentation
+ */
+function calllist_callblast_get_title($list_name) {
+  // Get ID from list name.
+  // List name should be "modulename_" concatenated with "id".
+  $nid = substr($list_name, 9);
+  // Get title for selected list
+  $title = check_plain(db_result(db_query("SELECT title FROM {node} WHERE nid = %d", $nid)));
+  return $title; 
+}
+
+/**
+ * @return
+ *  array(nid => title)
+ */
+function calllist_list() {
+ $lists = array();
+  $result = db_query("SELECT nid, title FROM {node} WHERE type = 'calllist'");
+  while ($list = db_fetch_object($result)) {
+    $nid = $list->nid;
+    $name = t($list->title);
+    $lists[$nid] = $name; 
+  }
+  
+  return $lists;
+}
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function calllist_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'calllist_node_form') {;
+    $form['buttons']['calllist_submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Save and Add Numbers from Attached List'),
+      '#weight' => 13,
+      // call submit handler before node_form_submit
+      '#submit' => array('calllist_csv_submit', 'node_form_submit'),
+    );
+    // Unset Preview button. It's unnecessary and a little confusing.
+    unset($form['buttons']['preview']);
+  }
+}
+
+/**
+ * Custom submit handler. Callback for calllist_submit button.
+ * 
+ * Grab numbers and names from attached text or CSV file and 
+ * add them to the call list.
+ */
+function calllist_csv_submit($form, &$form_state) {
+  // get file (a text file)
+  $file = $form_state['values']['field_calllist_phone_num_csv'][0];
+  $path = $file['filepath'];
+  if ($path) {
+    $a = array();
+    $fp = fopen($path, 'r');
+    // go through file line by line
+    while(!feof($fp)) {
+      // store line as new phone number
+      $line = fgets($fp);
+      $form_state['values']['field_calllist_phone_numbers'][]['value'] = $line;
+    }
+    fclose($fp);  
+  } 
+}

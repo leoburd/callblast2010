@@ -1,0 +1,111 @@
+API.txt
+-----------------------------------------------------------
+Modules can use the Call Blast API to provide "call lists"
+to Call Blast. A call list is any list of phone numbers
+to which you want to "blast" a phone call. Lists can be 
+easily generated from within Drupal and from external 
+data systems or CRMs (consumer/constituent relationship
+management software).
+
+Below is a list of hooks provided by Call Blast module
+and sample hooks. For a working example, see the 
+Call List module.
+
+
+hooks
+-----------------------------------------------------------
+hook_callblast_list        (required)
+hook_callblast_get_list    (required)
+
+
+sample hooks
+----------------------------------------------------------
+
+/**
+ * Implementation of hook_callblast_list().
+ *
+ * This hook provides Call Blast with the
+ * names of the call list(s) your module
+ * provides. Users select a call list by name
+ * when createing a new call blast (that is,
+ * a new callblast node).
+ * 
+ * Lists should follow the naming convention modulename_id. 
+ * 
+ * For example:
+ * - return array('calllist_janes_list' => "Jane's List", 'calllist_joes_list' => "Joe's List");
+ * - return array('mymodule_001' => "List X", 'mymodule_002' => "List Y");
+ * 
+ * Note: 
+ * It would be best for keys in the returned array to be
+ * strings, not auto incremented ID numbers, so we can try 
+ * to support exportables in the future. 
+ *
+ * Note also: 
+ * Call Blast provides a function, callblast_id($module, $list_name), 
+ * which can be used to easily generate string IDs for call lists 
+ * that only have human readable names. callblast_id will strip out 
+ * special characters, make spaces underscores etc.
+ * 
+ * @return 
+ *  $lists, array of names of call lists provided by this module, array('unique identifier' => 'call list name')
+ */
+function calllist_callblast_list() {
+  $lists = array();
+  $result = db_query("SELECT nid, title FROM {node} WHERE type = 'calllist'");
+  while ($list = db_fetch_object($result)) {
+    $id = 'calllist_' . $list->nid;
+    $name = t($list->title);
+    $lists[$id] = $name;
+  }
+
+  return $lists;
+}
+
+/**
+ * Implementation of hook_callblast_get_list().
+ * 
+ * On the node/add form, callblast.module calls 
+ * hook_callblast_list() to let the user select a 
+ * call list to which the Call Blast module will 
+ * blast calls. This step fires when the callblast
+ * node is saved. A list has been selected. Now a 
+ * voipcall node needs to be created for each number
+ * on the selected call list.
+ * 
+ * @param $list_name
+ *  string, name of call list being requested
+ * 
+ * @return
+ *  $list, array of arrays with information for each call being scheduled
+ * 
+ *  $list = array(                         // note: optional values fall back to defaults set for whole call blast
+ *    1 => array(                          
+ *      'destination' => '555 555 5555',   // destination number for phone call (required)
+ *      'name' => 'Leo Burd',              // name of person at destination number (optional)
+ *    2 => array(                          
+ *      'destination' => '666 666 6666',   // destination number for phone call (required)
+ *      'name' => 'Bryan Hirsch',          // name of person at destination number (optional)
+ *    3 => array(                          
+ *      'destination' => '777 777 7777',   // destination number for phone call (required)
+ *      'name' => 'George Washington',     // name of person at destination number (optional)
+ *    ),
+ *  ); 
+ *  
+ */
+function calllist_callblast_get_list($list_name) {
+  // Get ID from list name.
+  // List name should be "modulename_" concatenated with "id".
+  $nid = substr($list_name, 9);
+  
+  // Get numbers for selected list
+  $result = db_query("SELECT nid FROM {node} WHERE nid = %d", $nid);
+  $node = node_load($nid);
+  $list = array();
+  foreach ($node->field_calllist_phone_numbers as $num) {
+    $list[]['destination'] = $num['value'];
+  } 
+
+  return $list;
+}
+
