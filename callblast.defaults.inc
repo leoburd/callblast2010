@@ -563,57 +563,6 @@ function _callblast_content_default_fields() {
     ),
   );
 
-  // Exported field: field_callblast_audio_url
-  $fields[] = array(
-    'field_name' => 'field_callblast_audio_url',
-    'type_name' => 'callblast',
-    'display_settings' => array(
-      'weight' => '-1',
-      'parent' => '',
-      'label' => array(
-        'format' => 'above',
-      ),
-      'teaser' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      'full' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '4' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-    ),
-    'widget_active' => '1',
-    'type' => 'text',
-    'required' => '0',
-    'multiple' => '0',
-    'module' => 'text',
-    'active' => '1',
-    'text_processing' => '0',
-    'max_length' => '',
-    'allowed_values' => '',
-    'allowed_values_php' => '',
-    'widget' => array(
-      'rows' => 5,
-      'size' => '60',
-      'default_value' => array(
-        '0' => array(
-          'value' => '',
-          '_error_element' => 'default_value_widget][field_callblast_audio_url][0][value',
-        ),
-      ),
-      'default_value_php' => NULL,
-      'label' => 'Main Message URL',
-      'weight' => '-1',
-      'description' => '',
-      'type' => 'text_textfield',
-      'module' => 'text',
-    ),
-  );
-
   // Exported field: field_callblast_call_forward
   $fields[] = array(
     'field_name' => 'field_callblast_call_forward',

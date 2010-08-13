@@ -1,8 +1,0 @@
-; $Id$
-name = Voip Field Module 
-description = Provides a CCK field for recording VOIP messages.
-dependencies[] = content
-dependencies[] = filefield
-ackage = Voip Drupal
-core = 6.x
-
