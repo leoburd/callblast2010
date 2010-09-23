@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Helper to implementation of hook_views_default_views().
+ * Implementation of hook_views_default_views().
  */
-function _callblast_views_default_views() {
+function callblast_views_default_views() {
   $views = array();
 
   // Exported view: call_status

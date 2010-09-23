@@ -23,16 +23,6 @@ function callblast_help($path, $arg) {
 }
 
 /**
- * Implementation of hook_views_api().
- */
-function callblast_views_api() {
-  return array(
-    'api' => 2,
-    'path' => drupal_get_path('module', 'callblast'), 
-  );
-}
-
-/**
  * Implementation of hook_menu().
  */
 function callblast_menu() {

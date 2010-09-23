@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Helper to implementation of hook_content_default_fields().
+ * Implementation of hook_content_default_fields().
  */
-function _callblast_content_default_fields() {
+function callblast_content_default_fields() {
   $fields = array();
 
   // Exported field: field_blast_sent
-  $fields[] = array(
+  $fields['callblast-field_blast_sent'] = array(
     'field_name' => 'field_blast_sent',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -58,7 +58,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_audio_eigh
-  $fields[] = array(
+  $fields['callblast-field_callblast_audio_eigh'] = array(
     'field_name' => 'field_callblast_audio_eigh',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -104,7 +104,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_audio_file
-  $fields[] = array(
+  $fields['callblast-field_callblast_audio_file'] = array(
     'field_name' => 'field_callblast_audio_file',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -150,7 +150,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_audio_five
-  $fields[] = array(
+  $fields['callblast-field_callblast_audio_five'] = array(
     'field_name' => 'field_callblast_audio_five',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -196,7 +196,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_audio_four
-  $fields[] = array(
+  $fields['callblast-field_callblast_audio_four'] = array(
     'field_name' => 'field_callblast_audio_four',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -242,7 +242,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_audio_nine
-  $fields[] = array(
+  $fields['callblast-field_callblast_audio_nine'] = array(
     'field_name' => 'field_callblast_audio_nine',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -288,7 +288,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_audio_one
-  $fields[] = array(
+  $fields['callblast-field_callblast_audio_one'] = array(
     'field_name' => 'field_callblast_audio_one',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -334,7 +334,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_audio_options
-  $fields[] = array(
+  $fields['callblast-field_callblast_audio_options'] = array(
     'field_name' => 'field_callblast_audio_options',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -380,7 +380,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_audio_seve
-  $fields[] = array(
+  $fields['callblast-field_callblast_audio_seve'] = array(
     'field_name' => 'field_callblast_audio_seve',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -426,7 +426,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_audio_six
-  $fields[] = array(
+  $fields['callblast-field_callblast_audio_six'] = array(
     'field_name' => 'field_callblast_audio_six',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -472,7 +472,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_audio_three
-  $fields[] = array(
+  $fields['callblast-field_callblast_audio_three'] = array(
     'field_name' => 'field_callblast_audio_three',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -518,7 +518,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_audio_two
-  $fields[] = array(
+  $fields['callblast-field_callblast_audio_two'] = array(
     'field_name' => 'field_callblast_audio_two',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -564,7 +564,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_audio_url
-  $fields[] = array(
+  $fields['callblast-field_callblast_audio_url'] = array(
     'field_name' => 'field_callblast_audio_url',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -615,7 +615,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_call_forward
-  $fields[] = array(
+  $fields['callblast-field_callblast_call_forward'] = array(
     'field_name' => 'field_callblast_call_forward',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -666,7 +666,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_calllist
-  $fields[] = array(
+  $fields['callblast-field_callblast_calllist'] = array(
     'field_name' => 'field_callblast_calllist',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -715,7 +715,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_end
-  $fields[] = array(
+  $fields['callblast-field_callblast_end'] = array(
     'field_name' => 'field_callblast_end',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -776,7 +776,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_scheduled_start
-  $fields[] = array(
+  $fields['callblast-field_callblast_scheduled_start'] = array(
     'field_name' => 'field_callblast_scheduled_start',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -837,7 +837,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_script
-  $fields[] = array(
+  $fields['callblast-field_callblast_script'] = array(
     'field_name' => 'field_callblast_script',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -888,7 +888,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_start
-  $fields[] = array(
+  $fields['callblast-field_callblast_start'] = array(
     'field_name' => 'field_callblast_start',
     'type_name' => 'callblast',
     'display_settings' => array(
@@ -949,7 +949,7 @@ function _callblast_content_default_fields() {
   );
 
   // Exported field: field_callblast_message
-  $fields[] = array(
+  $fields['callblast_message-field_callblast_message'] = array(
     'field_name' => 'field_callblast_message',
     'type_name' => 'callblast_message',
     'display_settings' => array(
@@ -995,123 +995,27 @@ function _callblast_content_default_fields() {
   );
 
   // Translatables
-  array(
-    t('Blast sent'),
-    t('Button 1 message'),
-    t('Button 2 message'),
-    t('Button 3 message'),
-    t('Button 4 message'),
-    t('Button 5 message'),
-    t('Button 6 message'),
-    t('Button 7 message'),
-    t('Button 8 message'),
-    t('Button 9 message'),
-    t('Call Blast Message'),
-    t('Call List'),
-    t('End Time'),
-    t('Forward Call To'),
-    t('Main Message'),
-    t('Main Message URL'),
-    t('Options Message'),
-    t('Scheduled Start Time'),
-    t('Script'),
-    t('Start Time'),
-  );
+  // Included for use with string extractors like potx.
+  t('Blast sent');
+  t('Button 1 message');
+  t('Button 2 message');
+  t('Button 3 message');
+  t('Button 4 message');
+  t('Button 5 message');
+  t('Button 6 message');
+  t('Button 7 message');
+  t('Button 8 message');
+  t('Button 9 message');
+  t('Call Blast Message');
+  t('Call List');
+  t('End Time');
+  t('Forward Call To');
+  t('Main Message');
+  t('Main Message URL');
+  t('Options Message');
+  t('Scheduled Start Time');
+  t('Script');
+  t('Start Time');
 
   return $fields;
-}
-
-/**
- * Helper to implementation of hook_fieldgroup_default_groups().
- */
-function _callblast_fieldgroup_default_groups() {
-  $groups = array();
-
-  // Exported group: group_advanced
-  $groups[] = array(
-    'group_type' => 'standard',
-    'type_name' => 'callblast',
-    'group_name' => 'group_advanced',
-    'label' => 'Advanced Call Blast Settings',
-    'settings' => array(
-      'form' => array(
-        'style' => 'fieldset_collapsed',
-        'description' => '',
-      ),
-      'display' => array(
-        'weight' => '2',
-        'label' => 'above',
-        'teaser' => array(
-          'format' => 'fieldset',
-          'exclude' => 0,
-        ),
-        'full' => array(
-          'format' => 'fieldset',
-          'exclude' => 0,
-        ),
-        'description' => '',
-        '4' => array(
-          'format' => 'fieldset',
-          'exclude' => 0,
-        ),
-      ),
-    ),
-    'weight' => '2',
-    'fields' => array(
-      '0' => 'field_callblast_script',
-    ),
-  );
-
-  // Exported group: group_options
-  $groups[] = array(
-    'group_type' => 'standard',
-    'type_name' => 'callblast',
-    'group_name' => 'group_options',
-    'label' => 'Additional Voice Message Options',
-    'settings' => array(
-      'form' => array(
-        'style' => 'fieldset_collapsed',
-        'description' => '<p>The <strong>Options Message</strong> offers the callee options, then records and responds to their options. For example, this message might say: "For if you can attend the meeting in Boston press 1, if you can attend the meeting in New York City press 2, if you would like to organize a meeting in you own city or town press 3." The button pushed will be recorded for each call, and <a href="/?q=callstatus">available for you to review.</a></p>
-<p><strong>Button X message</strong> provides a response to the callee\'s selection. For example, Button 1 message might say something like this: "The Boston meeting will take place at MIT, June 1, 2010. To get to MIT... "</p>
-<p><strong>Suggestion:</strong> As a courtesy to the callee, you may want to end each recording with this sentence: "To replay this recording press *, to speak with someone in person press 0 and to disconnect press #."</p>',
-      ),
-      'display' => array(
-        'description' => '',
-        'teaser' => array(
-          'format' => 'fieldset',
-          'exclude' => 0,
-        ),
-        'full' => array(
-          'format' => 'fieldset',
-          'exclude' => 0,
-        ),
-        '4' => array(
-          'format' => 'fieldset',
-          'exclude' => 0,
-        ),
-        'label' => 'above',
-      ),
-    ),
-    'weight' => '1',
-    'fields' => array(
-      '0' => 'field_callblast_audio_options',
-      '1' => 'field_callblast_audio_one',
-      '2' => 'field_callblast_audio_two',
-      '3' => 'field_callblast_audio_three',
-      '4' => 'field_callblast_audio_four',
-      '5' => 'field_callblast_audio_five',
-      '6' => 'field_callblast_audio_six',
-      '7' => 'field_callblast_audio_seve',
-      '8' => 'field_callblast_audio_eigh',
-      '9' => 'field_callblast_audio_nine',
-    ),
-  );
-
-  // Translatables
-  array(
-    t('Additional Voice Message Options'),
-    t('Advanced Call Blast Settings'),
-  );
-
-  return $groups;
 }

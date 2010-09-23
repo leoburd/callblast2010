@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Helper to implementation of hook_content_default_fields().
+ * Implementation of hook_content_default_fields().
  */
-function _calllist_content_default_fields() {
+function calllist_content_default_fields() {
   $fields = array();
 
   // Exported field: field_calllist_phone_num_csv
-  $fields[] = array(
+  $fields['calllist-field_calllist_phone_num_csv'] = array(
     'field_name' => 'field_calllist_phone_num_csv',
     'type_name' => 'calllist',
     'display_settings' => array(
@@ -63,7 +63,7 @@ function _calllist_content_default_fields() {
   );
 
   // Exported field: field_calllist_phone_numbers
-  $fields[] = array(
+  $fields['calllist-field_calllist_phone_numbers'] = array(
     'field_name' => 'field_calllist_phone_numbers',
     'type_name' => 'calllist',
     'display_settings' => array(
@@ -115,10 +115,9 @@ function _calllist_content_default_fields() {
   );
 
   // Translatables
-  array(
-    t('Phone numbers'),
-    t('Upload Phone Numbers'),
-  );
+  // Included for use with string extractors like potx.
+  t('Phone numbers');
+  t('Upload Phone Numbers');
 
   return $fields;
 }

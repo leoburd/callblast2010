@@ -1,19 +1,21 @@
 <?php
 
 /**
- * Implementation of hook_content_default_fields().
- */
-function calllist_content_default_fields() {
-  module_load_include('inc', 'calllist', 'calllist.defaults');
-  $args = func_get_args();
-  return call_user_func_array('_calllist_content_default_fields', $args);
-}
-
-/**
  * Implementation of hook_node_info().
  */
 function calllist_node_info() {
-  module_load_include('inc', 'calllist', 'calllist.features.node');
-  $args = func_get_args();
-  return call_user_func_array('_calllist_node_info', $args);
+  $items = array(
+    'calllist' => array(
+      'name' => t('Call List'),
+      'module' => 'features',
+      'description' => t('Create "call lists" for the Call Blast module. (Note: These are simple call lists, meant to provide an example of how call lists can be made available for use with call blasts.)'),
+      'has_title' => '1',
+      'title_label' => t('Title'),
+      'has_body' => '0',
+      'body_label' => '',
+      'min_word_count' => '0',
+      'help' => '',
+    ),
+  );
+  return $items;
 }
