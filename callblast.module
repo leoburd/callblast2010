@@ -189,8 +189,6 @@ function theme_callblast_block() {
 
 /**
  * Implementation of hook_form_alter().
- * 
- * TODO Delete this if we don't end up using voipfield.
  */
 function callblast_form_alter(&$form, &$form_state, $form_id){
   // callblast node form
@@ -223,9 +221,6 @@ function callblast_form_alter(&$form, &$form_state, $form_id){
      * If voipfield module is NOT enabled
      * hide the Main Message URL field. 
      */
-    if(!function_exists('voipfield_form_alter')) {
-      $form['field_callblast_audio_url']['#type'] = 'hidden';
-    }
   }
 }
 
