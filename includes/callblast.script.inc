@@ -220,16 +220,7 @@ function callblast_voipscript_load_script($script_name, $vars = NULL) {
  * @see hook_voipscript_load_script()
  */
 function _callblast_record_callback($call_id, $recording_url, $recording_duration, $uid, $name, $number) {
-  // Save info in db.
-// CONTINUE HERE. 
-// TODO figure out why this isn't working. Is there a way to see the mysql error message here? 
-  /*
-  $sql = "INSERT INTO {callblast_recording} (call_id, uid, name, number, url, duration) " 
-          ."VALUES ('%s', %d, '%s', '%s', '%s', %d') ";
-  $args = array($call_id, $uid, $name, $number, $recording_url, $recording_duration);
-  db_query($sql, $args);
-// */
-
+  // Note: Do not replace $call_id and $recording_url with '%s' here, it will cause mysql errors.
   $sql = "INSERT INTO {callblast_recording} (call_id, url, uid, name, number, duration) " 
           ."VALUES ('$call_id', '$recording_url', %d, '%s', '%s', %d) ";
   $args = array($uid, $name, $number, $recording_duration);
