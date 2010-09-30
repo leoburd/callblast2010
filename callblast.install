@@ -47,5 +47,70 @@ function callblast_schema() {
     'primary key' => array('callblast_nid', 'voipcall_nid'),
   );
 
+  /**
+   * callblast_recording table
+   * 
+   * This table keeps track of recorded messages
+   * to be attached to callblasts as blast messages.
+   */
+  $schema['callblast_recording'] = array(
+    'fields' => array(
+      /* TODO There's no way to pass voipcall_nid to the script right now. Work around: Store call_id as unique_id instead.
+      // nid of voipcall that recorded message
+      'voipcall_nid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'default' => 0,
+        'not null' => TRUE,
+      ),
+      // */
+      // call_id, unique id for call stored in watchdog when messages are recorded.
+      'call_id' => array(
+        'type' => 'varchar',  // todo character v. varchar for primary key? 
+        'length' => 30,         // todo how long can these unique ids be? 
+        'not null' => TRUE, 
+        'default' => ''
+      ),
+      // uid of user who recorded the recording
+      'uid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'default' => 0,
+        'not null' => TRUE,
+      ),
+      // TODO Make these unique? Add validation to confirm user wants to delete/replace an existing message with the same name.
+      // recording name
+      'name' => array(
+        'type' => 'varchar', 
+        'length' => 255, 
+        'not null' => TRUE, 
+        'default' => ''
+      ),
+      // number where recording was recorded 
+      'number' => array(
+        'type' => 'varchar', 
+        'length' => 15, 
+        'not null' => TRUE, 
+        'default' => ''
+      ),
+      // url where recording is stored 
+      'url' => array(
+        'type' => 'varchar', 
+        'length' => 15, 
+        'not null' => TRUE, 
+        'default' => ''
+      ),
+      // url where recording is stored 
+      'duration' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'default' => 0,
+        'not null' => TRUE,
+      ),
+    ), 
+    //'primary key' => array('voipcall_nid'),
+    'primary key' => array('call_id'),
+  );
+
   return $schema;
 }

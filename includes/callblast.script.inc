@@ -10,7 +10,7 @@
  * @param $script_name 
  *  string
  * 
- * @param $vars
+ * @param $vars, $script_name = 'callblast_message'
  *   $vars = array(
  *     'message_url' => $message_url, 
  *     'forward_to_number' => $forward_to_number,
@@ -25,8 +25,11 @@
  *     'eight_url' => $eight_url,
  *     'nine_url' => $nine_url,
  *   );  
+ * 
+ * @param $vars, $script_name = 'callblast_record'
+ *  $vars = array('name' => $name, 'number' => $number));
  */
-function callblast_voipscript_load_script($script_name, $vars) {
+function callblast_voipscript_load_script($script_name, $vars = NULL) {
 
   $script = NULL;
   switch ($script_name) {
@@ -153,7 +156,82 @@ function callblast_voipscript_load_script($script_name, $vars) {
       $script->addHangup();    
     
     break;
+
+    case 'callblast_record': 
+      $script = new VoipScript('callblast_record');
+
+      $script->addLabel('start');
+      $script->addSay("Please record your message after the beep.  When done, press the pound key.");
+      $timeout = 5;
+      $end_key = '#';
+      $max_length = 20;
+      $script->addRecord($timeout, $end_key, $max_length);
+
+      $script->addSay('You said ');
+      $script->addPlay('%recording_url');
+
+      $script->addLabel('accept menu');
+      $text = "To accept this recording, press 1.  To record it once again, press 2. To hangup, press the pound key.";
+      $url = '';
+      $timeout = 5;
+      $end_key = '';
+      $num_digits = 1;
+      $script->addGetInput($text, $url, $timeout, $end_key, $num_digits);
+
+      $script->addGotoIf('accept recording', "^%input_digits == '1'");
+
+      $script->addGotoIf('start', "^%input_digits == '2'");
+
+      $script->addGotoIf('end call', "^%input_digits == '#'");
+
+      $script->addSay('Invalid input received. Please try again.');
+      $script->addGoto('accept menu');
+
+      $script->addLabel('accept recording');
+      $script->addSay('About to start processing the recorded file.');
+      // Set variables from $vars to pass to callback function.
+      $script->addSet('uid', $vars['uid']); 
+      $script->addSet('name', $vars['name']); 
+      $script->addSet('number', $vars['number']); 
+      // Process recording.
+      $script->addSet('callback_result',
+        '^_callblast_record_callback(%call_id, %recording_url, %recording_duration, %uid, %name, %number)');
+
+      $script->addSay('The callback returned: %callback_result');
+      $script->addGoto('end call');
+
+      $script->addLabel('no input received');
+      $script->addSay("No input received. Please try again.");
+      $script->addGoto('start');
+
+      $script->addLabel('end call');
+      $script->addSay('Bye bye.');
+      $script->addHangup();
+
+    break;
   }
 
   return $script;
 }
+
+/**
+ * Callback for the voip script callblast_record.
+ * 
+ * @see hook_voipscript_load_script()
+ */
+function _callblast_record_callback($call_id, $recording_url, $recording_duration, $uid, $name, $number) {
+  // Save info in db.
+// CONTINUE HERE. 
+// TODO figure out why this isn't working. Is there a way to see the mysql error message here? 
+  db_query("INSERT INTO {callblast_recording} (call_id, uid, name, number, url, duration) " 
+          ."VALUES ('%s', %d, '%s', '%s', '%s', %d') ", $call_id, $uid, $name, $number, $recording_url, $recording_duration);
+
+ // Log call blast with watchdog
+  $type = 'call blast';
+  $message = t("New message recorded. Call_id: $call_id, recording_url: $recording_url, recording_duration: $recording_duration, name: $name, number: $number");
+  $severity = WATCHDOG_NOTICE;
+  watchdog($type, $message);
+
+  return 'Success.';
+}
+

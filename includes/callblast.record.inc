@@ -37,24 +37,39 @@ function callblast_record_form() {
 
 /**
  * Callback for form submission.
+ * 
+ * TODO Should we give users a way to delete bad messages? 
  */ 
 function callblast_record_form_submit(&$form, &$form_state) {
 //dsm($form_state);
- 
+  global $user;
+
   $name = $form_state['values']['name'];
   $number = $form_state['values']['number'];
+  $vars = array('uid' => $user->uid, 'name' => $name, 'number' => $number);
 
-//dsm(array('name' => $name, 'number' => $number));
-
+  // Create new voipcall node for the call 
+  // that's about to be placed to the user 
+  // recording a callblast message.
+  $details['dest_number'] = $number;
+  $details['dest_name'] = $user->name;
+  $details['caller_name'] = 'callblast message recorder';
   // load voip script
-// CONTINUE HERE
-// CREATE CALLBLAST_RECORD SCRIPT
-  //$script = VoipScript::loadScript('callblast_record', $vars);
-  //$details['script'] = $script;
+  $script = VoipScript::loadScript('callblast_record', $vars);
+  $details['script'] = $script;
+  $voipcall_node = voipcall_save($details); 
 
-  // Fill in $details for voipcall_save().
+  // Dial the call.
+  voip_dial($voipcall_node);
 
-  // Send call to number with voipcall_save($details); 
-  // TODO It's not intuitive that voipcall_save is how you send a call out.
   // Store message name, number, uid, and url for recorded message in database.
+//TODO
+
+  // Log call blast with watchdog
+  $type = 'call blast';
+  $message = t("New call blast message recorded by $user->name. See voipcall nid $voipcall_node->nid");
+  $severity = WATCHDOG_NOTICE;
+  watchdog($type, $message);
 }
+
+
