@@ -67,7 +67,7 @@ function callblast_schema() {
       // call_id, unique id for call stored in watchdog when messages are recorded.
       'call_id' => array(
         'type' => 'varchar',  // todo character v. varchar for primary key? 
-        'length' => 30,         // todo how long can these unique ids be? 
+        'length' => 255,      // todo how long can these unique ids be? 
         'not null' => TRUE, 
         'default' => ''
       ),
@@ -96,7 +96,7 @@ function callblast_schema() {
       // url where recording is stored 
       'url' => array(
         'type' => 'varchar', 
-        'length' => 15, 
+        'length' => 255, 
         'not null' => TRUE, 
         'default' => ''
       ),

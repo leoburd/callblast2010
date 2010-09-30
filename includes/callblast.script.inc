@@ -223,8 +223,17 @@ function _callblast_record_callback($call_id, $recording_url, $recording_duratio
   // Save info in db.
 // CONTINUE HERE. 
 // TODO figure out why this isn't working. Is there a way to see the mysql error message here? 
-  db_query("INSERT INTO {callblast_recording} (call_id, uid, name, number, url, duration) " 
-          ."VALUES ('%s', %d, '%s', '%s', '%s', %d') ", $call_id, $uid, $name, $number, $recording_url, $recording_duration);
+  /*
+  $sql = "INSERT INTO {callblast_recording} (call_id, uid, name, number, url, duration) " 
+          ."VALUES ('%s', %d, '%s', '%s', '%s', %d') ";
+  $args = array($call_id, $uid, $name, $number, $recording_url, $recording_duration);
+  db_query($sql, $args);
+// */
+
+  $sql = "INSERT INTO {callblast_recording} (call_id, url, uid, name, number, duration) " 
+          ."VALUES ('$call_id', '$recording_url', %d, '%s', '%s', %d) ";
+  $args = array($uid, $name, $number, $recording_duration);
+  db_query($sql, $args);
 
  // Log call blast with watchdog
   $type = 'call blast';
