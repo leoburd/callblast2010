@@ -339,7 +339,7 @@ function callblast_get_recordings() {
     $recordings[$i]['url'] = $row->url;
     $recordings[$i]['number'] = $row->number;
     $recordings[$i]['duration'] = $row->duration;
-    $recordings[$i]['uid'] = $uid->uid;
+    $recordings[$i]['uid'] = $row->uid;
     $i++;
   }
 

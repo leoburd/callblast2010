@@ -228,7 +228,7 @@ function _callblast_record_callback($call_id, $recording_url, $recording_duratio
 
  // Log call blast with watchdog
   $type = 'call blast';
-  $message = t("New message recorded. Call_id: $call_id, recording_url: $recording_url, recording_duration: $recording_duration, name: $name, number: $number");
+  $message = t("New message recorded. Call_id: $call_id, recording_url: $recording_url, recording_duration: $recording_duration, name: $name, number: $number, uid: $uid");
   $severity = WATCHDOG_NOTICE;
   watchdog($type, $message);
 
