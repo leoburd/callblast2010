@@ -54,6 +54,7 @@ function callblast_menu() {
     'access arguments' => array('access recordings'),
     'file' => 'includes/callblast.recordings.inc',
   );  
+
   
   // Call back for auto-complete on node/add and node/edit form
   $items['callblast/list/autocomplete'] = array(
@@ -63,7 +64,15 @@ function callblast_menu() {
     'type' => MENU_CALLBACK,
     'file' => 'includes/callblast.inc',
   );
-  
+
+  // Callback for recordings/upload AHAH 
+  $items['callblast/mainmessage/js'] = array(
+    'title' => 'main message',
+    'page callback' => 'callblast_mainmessage_js',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('access content'),
+  );
+ 
   return $items;
 }
 
@@ -224,7 +233,6 @@ function callblast_form_alter(&$form, &$form_state, $form_id){
     // Get rid of preview button, we don't need it.
     unset($form['buttons']['preview']);
     
-
     // Usability:
     // Hide 'blast sent', start time and end time
     // fields for users other than user 1.
@@ -234,6 +242,31 @@ function callblast_form_alter(&$form, &$form_state, $form_id){
       $form['field_callblast_start']['#access'] = FALSE;
       $form['field_callblast_end']['#access'] = FALSE;
     }
+    // Recordings
+//CONTINUE HERE
+    $form['mainmessage_ahah'] = array(
+      '#type' => 'button',
+      '#value' => t('Upload Recording'),
+      '#weight' => $form['field_callblast_recording0']['#weight'] +1,
+      '#submit' => array('callblast_form_submit'),//none JS version
+      '#prefix' => '<div id="edit-field-callblast-audio-url-0-value-wrapper">',
+      // '#prefix' => '<div id="main-message-url">',
+      // '#prefix' => '<div id="testing123">',
+      '#suffix' => '</div>',
+      '#ahah' => array(
+        'event' => 'click',
+        'path' => 'voipfield/js',
+        'wrapper' => 'edit-field-callblast-audio-url-0-value-wrapper',
+        //'wrapper' => 'testing123',
+        // 'wrapper' => 'edit-voipfield',
+        'method' => 'replace',
+        'effect' => 'fade',
+        'progress' => array(
+          'type' => 'bar',
+          'message' => t('Loading...')
+        ),
+      ),
+    );
   }
 }
 
