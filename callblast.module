@@ -234,10 +234,6 @@ function callblast_form_alter(&$form, &$form_state, $form_id){
       $form['field_callblast_start']['#access'] = FALSE;
       $form['field_callblast_end']['#access'] = FALSE;
     }
-    /**
-     * If voipfield module is NOT enabled
-     * hide the Main Message URL field. 
-     */
   }
 }
 
