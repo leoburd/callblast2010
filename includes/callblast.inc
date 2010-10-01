@@ -320,3 +320,28 @@ function _callblast_call($voipcall_nid) {
     // place outgoing call
     voip_dial($voipcall_node);
 }
+
+/**
+ * @return 
+ *  array, $recordings
+ *  - $recordings[n]['name'] => $message_name; 
+ *  - $recordings[n]['url'] => $url;
+ *  - $recordings[n]['number'] => $url;
+ *  - $recordings[n]['duration'] => $url;
+ *  - $recordings[n]['uid'] => $url;
+ */
+function callblast_get_recordings() {
+  $results = db_query("SELECT * FROM {callblast_recording} ");
+  $recordings = array();
+  $i = 0;
+  while ($row = db_fetch_object($results)) {
+    $recordings[$i]['name'] = $row->name; 
+    $recordings[$i]['url'] = $row->url;
+    $recordings[$i]['number'] = $row->number;
+    $recordings[$i]['duration'] = $row->duration;
+    $recordings[$i]['uid'] = $uid->uid;
+    $i++;
+  }
+
+  return $recordings;
+}
