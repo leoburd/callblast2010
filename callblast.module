@@ -28,7 +28,7 @@ function callblast_help($path, $arg) {
 function callblast_menu() {
   $items = array();
 
- // Send callblast now 
+  // Send callblast now 
   $items['callblast/send/%node'] = array(
     'title' => 'Call Blast: Send',
     'page callback' => 'callblast_send',
@@ -38,7 +38,7 @@ function callblast_menu() {
     'file' => 'includes/callblast.inc',
   );
   
- // Record messages
+  // Record messages
   $items['callblast/record'] = array(
     'title' => 'Record Call Blast Message',
     'page callback' => 'drupal_get_form',
@@ -46,8 +46,16 @@ function callblast_menu() {
     'access arguments' => array('record callblast message'),
     'file' => 'includes/callblast.record.inc',
   );
+
+  // Show recordings
+  $items['callblast/recordings'] = array(
+    'title' => 'Call Blast Recordings',
+    'page callback' => 'callblast_recordings_page',
+    'access arguments' => array('access recordings'),
+    'file' => 'includes/callblast.recordings.inc',
+  );  
   
- // Call back for auto-complete on node/add and node/edit form
+  // Call back for auto-complete on node/add and node/edit form
   $items['callblast/list/autocomplete'] = array(
     'title' => 'Call Blast Autocomplete List',
     'page callback' => 'callblast_list_autocomplete',
