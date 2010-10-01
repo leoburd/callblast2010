@@ -948,52 +948,6 @@ function callblast_content_default_fields() {
     ),
   );
 
-  // Exported field: field_callblast_message
-  $fields['callblast_message-field_callblast_message'] = array(
-    'field_name' => 'field_callblast_message',
-    'type_name' => 'callblast_message',
-    'display_settings' => array(
-      'weight' => '31',
-      'parent' => '',
-      'label' => array(
-        'format' => 'above',
-      ),
-      'teaser' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      'full' => array(
-        'format' => 'swftools_no_file',
-        'exclude' => 0,
-      ),
-      '4' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-    ),
-    'widget_active' => '1',
-    'type' => 'filefield',
-    'required' => '0',
-    'multiple' => '0',
-    'module' => 'filefield',
-    'active' => '1',
-    'list_field' => '0',
-    'list_default' => 1,
-    'description_field' => '0',
-    'widget' => array(
-      'file_extensions' => 'wav mp3',
-      'file_path' => 'callblast',
-      'progress_indicator' => 'bar',
-      'max_filesize_per_file' => '',
-      'max_filesize_per_node' => '',
-      'label' => 'Call Blast Message',
-      'weight' => '31',
-      'description' => '',
-      'type' => 'filefield_widget',
-      'module' => 'filefield',
-    ),
-  );
-
   // Translatables
   // Included for use with string extractors like potx.
   t('Blast sent');
@@ -1006,7 +960,6 @@ function callblast_content_default_fields() {
   t('Button 7 message');
   t('Button 8 message');
   t('Button 9 message');
-  t('Call Blast Message');
   t('Call List');
   t('End Time');
   t('Forward Call To');

@@ -23,7 +23,7 @@ function callblast_recordings_page() {
   }
   
   // caption
-  $caption = t('To listen to recording, click link below. '
+  $caption = t('To listen to a recording, click a link below. '
               .'Note: This may only work in a Firefox Internet browser. To get '
               .'the recording to play in Chrome, right click, open in a new tab/window, '
               .'delete ".mp3" from the end of the URL, then reload the page. ');
