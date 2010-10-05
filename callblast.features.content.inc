@@ -50,7 +50,7 @@ function callblast_content_default_fields() {
       ),
       'default_value_php' => NULL,
       'label' => 'Blast sent',
-      'weight' => '6',
+      'weight' => '5',
       'description' => '',
       'type' => 'optionwidgets_onoff',
       'module' => 'optionwidgets',
@@ -96,7 +96,7 @@ function callblast_content_default_fields() {
       'max_filesize_per_file' => '',
       'max_filesize_per_node' => '',
       'label' => 'Button 8 message',
-      'weight' => '14',
+      'weight' => '33',
       'description' => '',
       'type' => 'filefield_widget',
       'module' => 'filefield',
@@ -128,7 +128,7 @@ function callblast_content_default_fields() {
     ),
     'widget_active' => '1',
     'type' => 'filefield',
-    'required' => '1',
+    'required' => '0',
     'multiple' => '0',
     'module' => 'filefield',
     'active' => '1',
@@ -141,8 +141,8 @@ function callblast_content_default_fields() {
       'progress_indicator' => 'bar',
       'max_filesize_per_file' => '',
       'max_filesize_per_node' => '',
-      'label' => 'Main Message',
-      'weight' => '-2',
+      'label' => 'Main Message Recording',
+      'weight' => 0,
       'description' => '',
       'type' => 'filefield_widget',
       'module' => 'filefield',
@@ -188,7 +188,7 @@ function callblast_content_default_fields() {
       'max_filesize_per_file' => '',
       'max_filesize_per_node' => '',
       'label' => 'Button 5 message',
-      'weight' => '11',
+      'weight' => '27',
       'description' => '',
       'type' => 'filefield_widget',
       'module' => 'filefield',
@@ -234,7 +234,7 @@ function callblast_content_default_fields() {
       'max_filesize_per_file' => '',
       'max_filesize_per_node' => '',
       'label' => 'Button 4 message',
-      'weight' => '10',
+      'weight' => '25',
       'description' => '',
       'type' => 'filefield_widget',
       'module' => 'filefield',
@@ -280,7 +280,7 @@ function callblast_content_default_fields() {
       'max_filesize_per_file' => '',
       'max_filesize_per_node' => '',
       'label' => 'Button 9 message',
-      'weight' => '15',
+      'weight' => '35',
       'description' => '',
       'type' => 'filefield_widget',
       'module' => 'filefield',
@@ -326,7 +326,7 @@ function callblast_content_default_fields() {
       'max_filesize_per_file' => '',
       'max_filesize_per_node' => '',
       'label' => 'Button 1 message',
-      'weight' => '7',
+      'weight' => '19',
       'description' => '',
       'type' => 'filefield_widget',
       'module' => 'filefield',
@@ -372,7 +372,7 @@ function callblast_content_default_fields() {
       'max_filesize_per_file' => '',
       'max_filesize_per_node' => '',
       'label' => 'Options Message',
-      'weight' => '6',
+      'weight' => '17',
       'description' => '',
       'type' => 'filefield_widget',
       'module' => 'filefield',
@@ -418,7 +418,7 @@ function callblast_content_default_fields() {
       'max_filesize_per_file' => '',
       'max_filesize_per_node' => '',
       'label' => 'Button 7 message',
-      'weight' => '13',
+      'weight' => '31',
       'description' => '',
       'type' => 'filefield_widget',
       'module' => 'filefield',
@@ -464,7 +464,7 @@ function callblast_content_default_fields() {
       'max_filesize_per_file' => '',
       'max_filesize_per_node' => '',
       'label' => 'Button 6 message',
-      'weight' => '12',
+      'weight' => '29',
       'description' => '',
       'type' => 'filefield_widget',
       'module' => 'filefield',
@@ -510,7 +510,7 @@ function callblast_content_default_fields() {
       'max_filesize_per_file' => '',
       'max_filesize_per_node' => '',
       'label' => 'Button 3 message',
-      'weight' => '9',
+      'weight' => '23',
       'description' => '',
       'type' => 'filefield_widget',
       'module' => 'filefield',
@@ -556,61 +556,10 @@ function callblast_content_default_fields() {
       'max_filesize_per_file' => '',
       'max_filesize_per_node' => '',
       'label' => 'Button 2 message',
-      'weight' => '8',
+      'weight' => '21',
       'description' => '',
       'type' => 'filefield_widget',
       'module' => 'filefield',
-    ),
-  );
-
-  // Exported field: field_callblast_audio_url
-  $fields['callblast-field_callblast_audio_url'] = array(
-    'field_name' => 'field_callblast_audio_url',
-    'type_name' => 'callblast',
-    'display_settings' => array(
-      'weight' => '-1',
-      'parent' => '',
-      'label' => array(
-        'format' => 'above',
-      ),
-      'teaser' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      'full' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-      '4' => array(
-        'format' => 'default',
-        'exclude' => 0,
-      ),
-    ),
-    'widget_active' => '1',
-    'type' => 'text',
-    'required' => '0',
-    'multiple' => '0',
-    'module' => 'text',
-    'active' => '1',
-    'text_processing' => '0',
-    'max_length' => '',
-    'allowed_values' => '',
-    'allowed_values_php' => '',
-    'widget' => array(
-      'rows' => 5,
-      'size' => '60',
-      'default_value' => array(
-        '0' => array(
-          'value' => '',
-          '_error_element' => 'default_value_widget][field_callblast_audio_url][0][value',
-        ),
-      ),
-      'default_value_php' => NULL,
-      'label' => 'Main Message URL',
-      'weight' => '-1',
-      'description' => '',
-      'type' => 'text_textfield',
-      'module' => 'text',
     ),
   );
 
@@ -658,7 +607,7 @@ function callblast_content_default_fields() {
       ),
       'default_value_php' => NULL,
       'label' => 'Forward Call To',
-      'weight' => 0,
+      'weight' => '2',
       'description' => 'Enter a number for call forwarding. This is the number callers will be directed to when they press "0". (E.g. Press "0" to be connected with your state senator; press "0" to be connected with a staff person who can assist you with X; press "0" to speak with an operator.) ',
       'type' => 'text_textfield',
       'module' => 'text',
@@ -768,10 +717,571 @@ function callblast_content_default_fields() {
       'year_range' => '-3:+3',
       'label_position' => 'above',
       'label' => 'End Time',
-      'weight' => '8',
+      'weight' => '7',
       'description' => '',
       'type' => 'date_select',
       'module' => 'date',
+    ),
+  );
+
+  // Exported field: field_callblast_recording0
+  $fields['callblast-field_callblast_recording0'] = array(
+    'field_name' => 'field_callblast_recording0',
+    'type_name' => 'callblast',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'text',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'text',
+    'active' => '1',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '$recordings = callblast_get_recordings();
+foreach ($recordings as $recording) {
+  $a[$recording[\'url\']] = $recording[\'name\'];
+}
+return $a; ',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Main Message Recording',
+      'weight' => '-1',
+      'description' => '',
+      'type' => 'optionwidgets_select',
+      'module' => 'optionwidgets',
+    ),
+  );
+
+  // Exported field: field_callblast_recording1
+  $fields['callblast-field_callblast_recording1'] = array(
+    'field_name' => 'field_callblast_recording1',
+    'type_name' => 'callblast',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'text',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'text',
+    'active' => '1',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '$recordings = callblast_get_recordings();
+foreach ($recordings as $recording) {
+  $a[$recording[\'url\']] = $recording[\'name\'];
+}
+return $a; ',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Button 1 message recording',
+      'weight' => '18',
+      'description' => '',
+      'type' => 'optionwidgets_select',
+      'module' => 'optionwidgets',
+    ),
+  );
+
+  // Exported field: field_callblast_recording2
+  $fields['callblast-field_callblast_recording2'] = array(
+    'field_name' => 'field_callblast_recording2',
+    'type_name' => 'callblast',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'text',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'text',
+    'active' => '1',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '$recordings = callblast_get_recordings();
+foreach ($recordings as $recording) {
+  $a[$recording[\'url\']] = $recording[\'name\'];
+}
+return $a; ',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Button 2 message recording',
+      'weight' => '20',
+      'description' => '',
+      'type' => 'optionwidgets_select',
+      'module' => 'optionwidgets',
+    ),
+  );
+
+  // Exported field: field_callblast_recording3
+  $fields['callblast-field_callblast_recording3'] = array(
+    'field_name' => 'field_callblast_recording3',
+    'type_name' => 'callblast',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'text',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'text',
+    'active' => '1',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '$recordings = callblast_get_recordings();
+foreach ($recordings as $recording) {
+  $a[$recording[\'url\']] = $recording[\'name\'];
+}
+return $a; ',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Button 3 message recording',
+      'weight' => '22',
+      'description' => '',
+      'type' => 'optionwidgets_select',
+      'module' => 'optionwidgets',
+    ),
+  );
+
+  // Exported field: field_callblast_recording4
+  $fields['callblast-field_callblast_recording4'] = array(
+    'field_name' => 'field_callblast_recording4',
+    'type_name' => 'callblast',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'text',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'text',
+    'active' => '1',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '$recordings = callblast_get_recordings();
+foreach ($recordings as $recording) {
+  $a[$recording[\'url\']] = $recording[\'name\'];
+}
+return $a; ',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Button 4 message recording',
+      'weight' => '24',
+      'description' => '',
+      'type' => 'optionwidgets_select',
+      'module' => 'optionwidgets',
+    ),
+  );
+
+  // Exported field: field_callblast_recording5
+  $fields['callblast-field_callblast_recording5'] = array(
+    'field_name' => 'field_callblast_recording5',
+    'type_name' => 'callblast',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'text',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'text',
+    'active' => '1',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '$recordings = callblast_get_recordings();
+foreach ($recordings as $recording) {
+  $a[$recording[\'url\']] = $recording[\'name\'];
+}
+return $a; ',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Button 5 message recording',
+      'weight' => '26',
+      'description' => '',
+      'type' => 'optionwidgets_select',
+      'module' => 'optionwidgets',
+    ),
+  );
+
+  // Exported field: field_callblast_recording6
+  $fields['callblast-field_callblast_recording6'] = array(
+    'field_name' => 'field_callblast_recording6',
+    'type_name' => 'callblast',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'text',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'text',
+    'active' => '1',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '$recordings = callblast_get_recordings();
+foreach ($recordings as $recording) {
+  $a[$recording[\'url\']] = $recording[\'name\'];
+}
+return $a; ',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Button 6 message recording',
+      'weight' => '28',
+      'description' => '',
+      'type' => 'optionwidgets_select',
+      'module' => 'optionwidgets',
+    ),
+  );
+
+  // Exported field: field_callblast_recording7
+  $fields['callblast-field_callblast_recording7'] = array(
+    'field_name' => 'field_callblast_recording7',
+    'type_name' => 'callblast',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'text',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'text',
+    'active' => '1',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '$recordings = callblast_get_recordings();
+foreach ($recordings as $recording) {
+  $a[$recording[\'url\']] = $recording[\'name\'];
+}
+return $a; ',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Button 7 message recording',
+      'weight' => '30',
+      'description' => '',
+      'type' => 'optionwidgets_select',
+      'module' => 'optionwidgets',
+    ),
+  );
+
+  // Exported field: field_callblast_recording8
+  $fields['callblast-field_callblast_recording8'] = array(
+    'field_name' => 'field_callblast_recording8',
+    'type_name' => 'callblast',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'text',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'text',
+    'active' => '1',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '$recordings = callblast_get_recordings();
+foreach ($recordings as $recording) {
+  $a[$recording[\'url\']] = $recording[\'name\'];
+}
+return $a; ',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Button 8 message recording',
+      'weight' => '32',
+      'description' => '',
+      'type' => 'optionwidgets_select',
+      'module' => 'optionwidgets',
+    ),
+  );
+
+  // Exported field: field_callblast_recording9
+  $fields['callblast-field_callblast_recording9'] = array(
+    'field_name' => 'field_callblast_recording9',
+    'type_name' => 'callblast',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'text',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'text',
+    'active' => '1',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '$recordings = callblast_get_recordings();
+foreach ($recordings as $recording) {
+  $a[$recording[\'url\']] = $recording[\'name\'];
+}
+return $a; ',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Button 9 message recording',
+      'weight' => '34',
+      'description' => '',
+      'type' => 'optionwidgets_select',
+      'module' => 'optionwidgets',
+    ),
+  );
+
+  // Exported field: field_callblast_recording_ops
+  $fields['callblast-field_callblast_recording_ops'] = array(
+    'field_name' => 'field_callblast_recording_ops',
+    'type_name' => 'callblast',
+    'display_settings' => array(
+      'label' => array(
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      '4' => array(
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+    'widget_active' => '1',
+    'type' => 'text',
+    'required' => '0',
+    'multiple' => '0',
+    'module' => 'text',
+    'active' => '1',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '$recordings = callblast_get_recordings();
+foreach ($recordings as $recording) {
+  $a[$recording[\'url\']] = $recording[\'name\'];
+}
+return $a; ',
+    'widget' => array(
+      'default_value' => array(
+        '0' => array(
+          'value' => '',
+        ),
+      ),
+      'default_value_php' => NULL,
+      'label' => 'Options Message Recording',
+      'weight' => '16',
+      'description' => '',
+      'type' => 'optionwidgets_select',
+      'module' => 'optionwidgets',
     ),
   );
 
@@ -941,7 +1451,7 @@ function callblast_content_default_fields() {
       'year_range' => '-3:+3',
       'label_position' => 'above',
       'label' => 'Start Time',
-      'weight' => '7',
+      'weight' => '6',
       'description' => '',
       'type' => 'date_select',
       'module' => 'date',
@@ -952,20 +1462,29 @@ function callblast_content_default_fields() {
   // Included for use with string extractors like potx.
   t('Blast sent');
   t('Button 1 message');
+  t('Button 1 message recording');
   t('Button 2 message');
+  t('Button 2 message recording');
   t('Button 3 message');
+  t('Button 3 message recording');
   t('Button 4 message');
+  t('Button 4 message recording');
   t('Button 5 message');
+  t('Button 5 message recording');
   t('Button 6 message');
+  t('Button 6 message recording');
   t('Button 7 message');
+  t('Button 7 message recording');
   t('Button 8 message');
+  t('Button 8 message recording');
   t('Button 9 message');
+  t('Button 9 message recording');
   t('Call List');
   t('End Time');
   t('Forward Call To');
-  t('Main Message');
-  t('Main Message URL');
+  t('Main Message Recording');
   t('Options Message');
+  t('Options Message Recording');
   t('Scheduled Start Time');
   t('Script');
   t('Start Time');
