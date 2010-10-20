@@ -9,6 +9,10 @@
  */
 function callblast_install() {
   drupal_install_schema('callblast');
+  // Increase weight of new tables to 0.
+  // This way CCK fields can be form altered
+  // in callblast.module and calllist.module.
+  db_query("UPDATE {system} SET weight = 1 WHERE name = 'callblast' OR name = 'calllist' ");
 }
 
 /**
@@ -31,17 +35,26 @@ function callblast_schema() {
    */
   $schema['callblast_call'] = array(
     'fields' => array(
+      // the call blast being sent
       'callblast_nid' => array(
         'type' => 'int',
         'unsigned' => TRUE,
         'default' => 0,
         'not null' => TRUE,
       ),
+      // each individual voipcall that's part of the call blast
       'voipcall_nid' => array(
         'type' => 'int',
         'unsigned' => TRUE,
         'default' => 0,
         'not null' => TRUE,
+      ),
+      // status (not called, calling, completed, canceled)
+      'status' => array(
+        'type' => 'varchar', 
+        'length' => 20, 
+        'not null' => TRUE, 
+        'default' => ''
       ),
     ), 
     'primary key' => array('callblast_nid', 'voipcall_nid'),
@@ -111,6 +124,69 @@ function callblast_schema() {
     //'primary key' => array('voipcall_nid'),
     'primary key' => array('call_id'),
   );
+  
+  /**
+   * callblast_input table
+   * 
+   * This table keeps track of user input  
+   * over the phone, responding to callblast options.
+   */
+  $schema['callblast_input'] = array(
+    'fields' => array(
+      'input_id' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'voipcall_nid' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'default' => 0,
+        'not null' => TRUE,
+      ),
+      'call_id' => array(
+        'type' => 'varchar',  // todo character v. varchar for primary key? 
+        'length' => 255,      // todo how long can these unique ids be? 
+        'not null' => TRUE, 
+        'default' => ''
+      ),
+      // uid of user who recorded the recording
+      'input_digits' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'default' => 0,
+        'not null' => TRUE,
+      ),
+    //'primary key' => array('voipcall_nid'),
+    ),
+    'primary key' => array('input_id'),
+  );
 
   return $schema;
 }
+
+/**
+ * Increase weight of new tables to 0.
+ * This way CCK fields can be form altered
+ * in callblast.module and calllist.module.
+ */
+function callblast_update_6001() {
+  db_query("UPDATE {system} SET weight = 1 WHERE name = 'callblast' OR name = 'calllist' ");
+}
+
+/**
+ * Add status collumn to callblast_call table.
+ */
+function callblast_update_6002() {
+  $ret = array();
+  $table = 'callblast_call';
+  $field = 'status';
+  $spec = array(
+    'type' => 'varchar', 
+    'length' => 20, 
+    'not null' => TRUE, 
+    'default' => ''
+  );
+  db_add_field(&$ret, $table, $field, $spec, $new_keys);
+}
+

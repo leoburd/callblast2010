@@ -35,6 +35,16 @@ function callblast_voipscript_load_script($script_name, $vars = NULL) {
   switch ($script_name) {
     case 'callblast_message':
       $script = new VoipScript($script_name);
+      // If the call has been answered by a machine and we have an alternate 
+      // message for answering machines, play it.
+      $script->addGotoIf('start', "^%dial_status != '" . VOIPCALL_ANSWERED_MACHINE . "'"); 
+      $machine_message = $vars['machine_message'];
+      $is_machine = ($machine_message) ? 'TRUE' : 'FALSE';  
+      $script->addGotoIf('start', "^!$is_machine");
+      $script->addPlay($machine_message);
+      $script->addHangup();
+
+      // play options
       // start here
       $script->addLabel('start');
       // play main message      
@@ -48,9 +58,9 @@ function callblast_voipscript_load_script($script_name, $vars = NULL) {
       // If user presses a button during the main message, handle the options
       $script->addGotoIf('process_options', "^%input_digits != '" . VoipScript::NO_INPUT . "'");
       // If no options message provided, hangup
-      $script->addGotoIf('end_call', "^!'{$vars['options_url']}'");
+      $script->addGotoIf('hang_up', "^!'{$vars['options_url']}'");
       // If the call has been answered by a machine, skip the options and hangup
-      $script->addGotoIf('end_call', "^%dial_status == '" . VOIPCALL_ANSWERED_MACHINE . "'");
+      $script->addGotoIf('hang_up', "^%dial_status == '" . VOIPCALL_ANSWERED_MACHINE . "'");
 
       // play options
       $script->addLabel('options');
@@ -63,11 +73,14 @@ function callblast_voipscript_load_script($script_name, $vars = NULL) {
 
       // process options
       $script->addLabel('process_options');
+      // save input
+      // note: callblast_input variable isn't used. we just want to call _callblast_input().
+      $script->addSet('callblast_input', '^_callblast_input(%input_digits, %call_id)');
       // Go to user's selected option.
       // * replay previous message 
       $script->addGotoIf('start', "^%input_digits == '*'");
       // #, end call
-      $script->addGotoIf('end_call', "^%input_digits == '#'");
+      $script->addGotoIf('hang_up', "^%input_digits == '#'");
       // 0, go to call forwarding
       $script->addGotoIf('forward', "^(%input_digits == '0') && '{$vars['forward_to_number']}'");
       // go to one 
@@ -100,59 +113,79 @@ function callblast_voipscript_load_script($script_name, $vars = NULL) {
       // option/message one
       $script->addLabel('one');
       $script->addPlay($vars['one_url']);
-      // go back to "options" menu
+      // end call
       $script->addGoto('end_call');
 
       // option/message two 
       $script->addLabel('two');
       $script->addPlay($vars['two_url']);
-      // go back to "options" menu
+      // end call
       $script->addGoto('end_call');
 
       // option/message three 
       $script->addLabel('three');
       $script->addPlay($vars['three_url']);
-      // go back to "options" menu
+      // end call
       $script->addGoto('end_call');
 
       // option/message four 
       $script->addLabel('four');
       $script->addPlay($vars['four_url']);
-      // go back to "options" menu
+      // end call
       $script->addGoto('end_call');
 
       // option/message five 
       $script->addLabel('five');
       $script->addPlay($vars['five_url']);
-      // go back to "options" menu
+      // end call
       $script->addGoto('end_call');
 
       // option/message six
       $script->addLabel('six');
       $script->addPlay($vars['six_url']);
-      // go back to "options" menu
+      // end call
       $script->addGoto('end_call');
 
       // option/message seven
       $script->addLabel('seven');
       $script->addPlay($vars['seven_url']);
-      // go back to "options" menu
+      // end call
       $script->addGoto('end_call');
 
       // option/message eight
       $script->addLabel('eight');
       $script->addPlay($vars['eight_url']);
-      // go back to "options" menu
+      // end call
       $script->addGoto('end_call');
 
       // option/message nine
       $script->addLabel('nine');
       $script->addPlay($vars['nine_url']);
-      // go back to "options" menu
+      // end call
       $script->addGoto('end_call');
 
-      // end call (hang up)
+      // end call 
       $script->addLabel('end_call');
+      // If no pre-end message provided, hang up
+      $script->addGotoIf('hang_up', "^!'{$vars['pre_end']}'");
+      // play pre_end message and get input
+      $text = ''; 
+      $url = $vars['pre_end'];
+      $timeout = 1;
+      $end_key = '';
+      $num_digits = 1;
+      $script->addGetInput($text, $url, $timeout, $end_key, $num_digits);
+      // If user presses 0, go to call forwarding
+      $script->addGotoIf('forward', "^(%input_digits == '0') && '{$vars['forward_to_number']}'");
+      // If user presses * replay previous message 
+      $script->addGotoIf('options', "^%input_digits == '*'");
+      // If user presses #, hang up
+      $script->addGotoIf('hang_up', "^%input_digits == '#'");
+      // hang up 
+      $script->addHangup();    
+
+      // hang up 
+      $script->addLabel('hang_up');
       $script->addHangup();    
     
     break;
@@ -162,9 +195,9 @@ function callblast_voipscript_load_script($script_name, $vars = NULL) {
 
       $script->addLabel('start');
       $script->addSay("Please record your message after the beep.  When done, press the pound key.");
-      $timeout = 5;
+      $timeout = 5; 
       $end_key = '#';
-      $max_length = 20;
+      $max_length = 3600;// max recording time 1 hour (Twilio will end after 5 second pause if user doesn't end recording).
       $script->addRecord($timeout, $end_key, $max_length);
 
       $script->addSay('You said ');
@@ -184,11 +217,11 @@ function callblast_voipscript_load_script($script_name, $vars = NULL) {
 
       $script->addGotoIf('end call', "^%input_digits == '#'");
 
-      $script->addSay('Invalid input received. Please try again.');
+      $script->addSay('Invalid input. Please try again.');
       $script->addGoto('accept menu');
 
       $script->addLabel('accept recording');
-      $script->addSay('About to start processing the recorded file.');
+      //$script->addSay('About to start processing the recorded file.');
       // Set variables from $vars to pass to callback function.
       $script->addSet('uid', $vars['uid']); 
       $script->addSet('name', $vars['name']); 
@@ -197,7 +230,7 @@ function callblast_voipscript_load_script($script_name, $vars = NULL) {
       $script->addSet('callback_result',
         '^_callblast_record_callback(%call_id, %recording_url, %recording_duration, %uid, %name, %number)');
 
-      $script->addSay('The callback returned: %callback_result');
+      $script->addSay('%callback_result');
       $script->addGoto('end call');
 
       $script->addLabel('no input received');
@@ -205,7 +238,7 @@ function callblast_voipscript_load_script($script_name, $vars = NULL) {
       $script->addGoto('start');
 
       $script->addLabel('end call');
-      $script->addSay('Bye bye.');
+      $script->addSay('Goodbye.');
       $script->addHangup();
 
     break;
@@ -228,10 +261,39 @@ function _callblast_record_callback($call_id, $recording_url, $recording_duratio
 
  // Log call blast with watchdog
   $type = 'call blast';
-  $message = t("New message recorded. Call_id: $call_id, recording_url: $recording_url, recording_duration: $recording_duration, name: $name, number: $number, uid: $uid");
+  $message = t("New message recorded. Call_id: $call_id, recording_url: $recording_url, "
+              ."recording_duration: $recording_duration, name: $name, number: $number, uid: $uid");
   $severity = WATCHDOG_NOTICE;
   watchdog($type, $message);
 
-  return 'Success.';
+  return 'Thank you.';
 }
 
+/**
+ * Callback for the voip script callblast_message
+ * to record user input.
+ * 
+ * @param $input_digits
+ *  integer, button pressed
+ * 
+ * @param $call_id
+ *  string, unique call id (can be used to match call to voipcall node)
+ * 
+ * @return
+ *  boolean
+ */
+function _callblast_input($input_digits, $call_id) {
+  // save user input to input table
+  db_query("INSERT INTO {callblast_input} (call_id, input_digits) " 
+          ."VALUES ('$call_id', '$input_digits') ");
+
+ // Log input from call blast with watchdog
+  $type = 'call blast';
+  $message = t("call_id: $call_id, input_digits: $input_digits");
+  $severity = WATCHDOG_NOTICE;
+  watchdog($type, $message);
+  
+  if ($input_digits && $call_id) {
+    return TRUE;
+  }
+}

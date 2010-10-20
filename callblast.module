@@ -16,7 +16,7 @@ include_once('includes/callblast.script.inc');
  */
 function callblast_help($path, $arg) {
   if ($path == 'admin/help#callblast') {
-    $txt = t('This module creates provides voip '
+    $txt = t('This module provides voip '
             .'call blast functionality. ');
     return $txt;
   }
@@ -28,12 +28,29 @@ function callblast_help($path, $arg) {
 function callblast_menu() {
   $items = array();
 
+  // settings page
+  $items['admin/settings/callblast'] = array(
+    'title' => 'Call Blast Settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('callblast_admin_settings'),
+    'access arguments' => array('administer callblast'),
+    'file' => 'includes/callblast.admin.inc',
+  );  
+
+  // Instructions page
+  $items['callblast/instructions'] = array(
+    'title' => 'Call Blast Instructions',
+    'page callback' => 'callblast_instructions_page',
+    'access arguments' => array('administer callblast'),
+    'file' => 'includes/callblast.instructions.inc',
+  );  
+
   // Send callblast now 
   $items['callblast/send/%node'] = array(
     'title' => 'Call Blast: Send',
     'page callback' => 'callblast_send',
     'page arguments' => array(2),
-    'access arguments' => array('send now'),
+    'access arguments' => array('administer callblast'),
     'type' => MENU_CALLBACK,
     'file' => 'includes/callblast.inc',
   );
@@ -43,7 +60,7 @@ function callblast_menu() {
     'title' => 'Record Call Blast Message',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('callblast_record_form'),
-    'access arguments' => array('record callblast message'),
+    'access arguments' => array('administer callblast'),
     'file' => 'includes/callblast.record.inc',
   );
 
@@ -51,10 +68,9 @@ function callblast_menu() {
   $items['callblast/recordings'] = array(
     'title' => 'Call Blast Recordings',
     'page callback' => 'callblast_recordings_page',
-    'access arguments' => array('access recordings'),
+    'access arguments' => array('administer callblast'),
     'file' => 'includes/callblast.recordings.inc',
   );  
-
   
   // Call back for auto-complete on node/add and node/edit form
   $items['callblast/list/autocomplete'] = array(
@@ -80,7 +96,7 @@ function callblast_menu() {
  * Implementation of hook_perm().
  */
 function callblast_perm() {
-  return array('send now');
+  return array('administer callblast');
 }
 
 /**
@@ -224,7 +240,7 @@ function callblast_form_alter(&$form, &$form_state, $form_id){
     $form['buttons']['send'] = array(
       '#type' => 'submit',
       '#value' => t('Send Now'),
-      '#access' => user_access('send now'),
+      '#access' => user_access('administer callblast'),
       '#submit' => array('node_form_submit', '_callblast_send_now'),
       '#weight' => 7,
     );
@@ -234,16 +250,24 @@ function callblast_form_alter(&$form, &$form_state, $form_id){
     unset($form['buttons']['preview']);
     
     // Usability:
-    // Hide 'blast sent', start time and end time
+    // Hide 'blast sent', start time, end time, field_callblast_status
     // fields for users other than user 1.
     global $user;
     if ($user->uid != 1) {
       $form['field_blast_sent']['#access'] = FALSE;
       $form['field_callblast_start']['#access'] = FALSE;
       $form['field_callblast_end']['#access'] = FALSE;
+      $form['field_callblast_status']['#access'] = FALSE;
+    }
+    // TODO Temp. CFK. Hide file upload fields. Only use recorded messages.
+    foreach($form as $key => $value) {
+      if (substr($key, 0, 22) == 'field_callblast_upload') {
+        $form[$key]['#type'] = 'hidden';
+      }
     }
     // Recordings
-//CONTINUE HERE
+    // TODO Add AHAH here. 
+    /************
     $form['mainmessage_ahah'] = array(
       '#type' => 'button',
       '#value' => t('Upload Recording'),
@@ -267,6 +291,7 @@ function callblast_form_alter(&$form, &$form_state, $form_id){
         ),
       ),
     );
+    // *********/
   }
 }
 
@@ -284,6 +309,34 @@ function callblast_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
       $node->field_callblast_calllist[0]['value'] = $list_name;
     }
   }
+
+  // If this is 
+  // (a) a voipcall 
+  // (b) sent by a callblast
+  // (c) being updated as 'complete' or 'no_answer', 
+  // (d) set the status in the callblast_call table to 'complete' 
+  // (e) and if the queue is not full, kick off the next call.
+  //
+  // (a)
+  $is_voipcall = $node->type == 'voipcall';
+  // (b)
+  $callblast_nid = callblast_get_callblast_nid($node->nid);
+  $is_callblast_call = ($callblast_nid) ? TRUE : FALSE;
+  if ($is_voipcall && $is_callblast_call && $op == 'update') {
+    // (c)
+    $voipcall = (array)$node;
+    $call_completed = voipcall_is_hangup($voipcall);
+    if ($call_completed) {
+      $callblast_call->voipcall_nid = $node->nid;
+      $callblast_call->callblast_nid = $callblast_nid;
+      $callblast_call->status = 'completed';
+      $callblast_call->update = TRUE;
+      // (d)
+      callblast_set_call_status($callblast_call);
+      // (e)
+      callblast_send_next_call($callblast_nid);
+    }
+  }
 }
 
 /**
@@ -293,7 +346,27 @@ function callblast_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
  */
 function callblast_cron() {
   // Run scheduled call blasts.
-  callblast_run();
+  $x = callblast_run();
+  // Process input
+  callblast_process_input();
+}
+
+/**
+ * Match call_ids in callblast_input table
+ * to correspoinding voipcall nids.
+ */
+function callblast_process_input() {
+  // Get a list of unprocessed calls (where voipcall_nid = 0)
+  $results = db_query("SELECT DISTINCT call_id FROM {callblast_input} WHERE voipcall_nid = 0 ");
+  $call_ids = array();
+  while ($row = db_fetch_object($results)) {
+    $call_ids[] = $row->call_id;
+  }
+  // Look up corresponding voipcall nid. Save in callblast_input table.
+  foreach ($call_ids as $call_id) {
+    $nid = db_result(db_query("SELECT nid FROM {content_type_voipcall} WHERE field_voipcall_call_id_value = '$call_id' "));
+    db_query("UPDATE {callblast_input} SET voipcall_nid = %d WHERE call_id = '$call_id' AND voipcall_nid = 0 ", $nid);
+  }
 }
 
 //==========================================//

@@ -19,3 +19,12 @@ function calllist_node_info() {
   );
   return $items;
 }
+
+/**
+ * Implementation of hook_views_api().
+ */
+function calllist_views_api() {
+  return array(
+    'api' => '2',
+  );
+}

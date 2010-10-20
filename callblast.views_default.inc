@@ -300,7 +300,7 @@ function callblast_views_default_views() {
       'relationship' => 'none',
     ),
     'button_pressed' => array(
-      'label' => 'Button Pressed',
+      'label' => 'Buttons Pressed',
       'alter' => array(
         'alter_text' => 0,
         'text' => '',
@@ -397,6 +397,7 @@ function callblast_views_default_views() {
   $handler->override_option('cache', array(
     'type' => 'none',
   ));
+  $handler->override_option('items_per_page', 100);
   $handler->override_option('use_pager', '1');
   $handler->override_option('style_plugin', 'table');
   $handler->override_option('style_options', array(
@@ -430,7 +431,7 @@ function callblast_views_default_views() {
     ),
     'default' => '-1',
   ));
-  $handler = $view->new_display('page', 'Page', 'page_1');
+  $handler = $view->new_display('page', 'Page: Call Status', 'page_1');
   $handler->override_option('path', 'callstatus');
   $handler->override_option('menu', array(
     'type' => 'none',
@@ -446,6 +447,74 @@ function callblast_views_default_views() {
     'weight' => 0,
     'name' => 'navigation',
   ));
+  $handler = $view->new_display('feed', 'Feed: CSV', 'feed_1');
+  $handler->override_option('items_per_page', 0);
+  $handler->override_option('style_plugin', 'views_csv');
+  $handler->override_option('style_options', array(
+    'mission_description' => FALSE,
+    'description' => '',
+    'attach_text' => 'CSV',
+    'provide_file' => 1,
+    'filename' => '%view.csv',
+    'parent_sort' => 1,
+    'seperator' => ',',
+    'quote' => 1,
+    'trim' => 1,
+    'header' => 1,
+  ));
+  $handler->override_option('row_plugin', '');
+  $handler->override_option('path', 'callstatus.csv');
+  $handler->override_option('menu', array(
+    'type' => 'none',
+    'title' => '',
+    'description' => '',
+    'weight' => 0,
+    'name' => 'navigation',
+  ));
+  $handler->override_option('tab_options', array(
+    'type' => 'none',
+    'title' => '',
+    'description' => '',
+    'weight' => 0,
+    'name' => 'navigation',
+  ));
+  $handler->override_option('displays', array(
+    'page_1' => 'page_1',
+    'default' => 0,
+  ));
+  $handler->override_option('sitename_title', FALSE);
+  $handler = $view->new_display('feed', 'Feed: XLS', 'feed_2');
+  $handler->override_option('items_per_page', 0);
+  $handler->override_option('style_plugin', 'views_xls');
+  $handler->override_option('style_options', array(
+    'mission_description' => FALSE,
+    'description' => '',
+    'attach_text' => 'XLS',
+    'provide_file' => 1,
+    'filename' => '%view.xls',
+    'parent_sort' => 1,
+  ));
+  $handler->override_option('row_plugin', '');
+  $handler->override_option('path', 'callstatus.xls');
+  $handler->override_option('menu', array(
+    'type' => 'none',
+    'title' => '',
+    'description' => '',
+    'weight' => 0,
+    'name' => 'navigation',
+  ));
+  $handler->override_option('tab_options', array(
+    'type' => 'none',
+    'title' => '',
+    'description' => '',
+    'weight' => 0,
+    'name' => 'navigation',
+  ));
+  $handler->override_option('displays', array(
+    'page_1' => 'page_1',
+    'default' => 0,
+  ));
+  $handler->override_option('sitename_title', FALSE);
 
   $views[$view->name] = $view;
 
@@ -494,7 +563,7 @@ function callblast_views_default_views() {
       ),
       'relationship' => 'none',
     ),
-    'field_callblast_audio_file_fid' => array(
+    'field_callblast_upload0_fid' => array(
       'label' => 'Message',
       'alter' => array(
         'alter_text' => 0,
@@ -527,9 +596,9 @@ function callblast_views_default_views() {
         'multiple_reversed' => FALSE,
       ),
       'exclude' => 0,
-      'id' => 'field_callblast_audio_file_fid',
-      'table' => 'node_data_field_callblast_audio_file',
-      'field' => 'field_callblast_audio_file_fid',
+      'id' => 'field_callblast_upload0_fid',
+      'table' => 'node_data_field_callblast_upload0',
+      'field' => 'field_callblast_upload0_fid',
       'relationship' => 'none',
     ),
     'field_callblast_calllist_value' => array(
@@ -821,6 +890,7 @@ function callblast_views_default_views() {
     'type' => 'none',
   ));
   $handler->override_option('title', 'Call Blast');
+  $handler->override_option('use_pager', '1');
   $handler->override_option('style_plugin', 'table');
   $handler->override_option('style_options', array(
     'grouping' => '',

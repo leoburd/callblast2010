@@ -7,11 +7,13 @@
 class callblast_handler_field_callblast_call_button_pressed extends views_handler_field {
   function render($values) {
     $voipcall_nid = $values->callblast_call_voipcall_nid;
-    $node = node_load($voipcall_nid);
-    $vars = unserialize($node->field_voipcall_script_variables[0]['value']);
-    $pressed = $vars['gather_digits'];
-    $pressed = check_plain($pressed); // this should be an integer
-
+    $inputs = callblast_get_input($voipcall_nid); 
+    $i = 0;
+    $pressed = '';
+    foreach ($inputs as $input) {
+      $pressed .= ($i == 0) ? $input : ", $input";      
+      $i++;
+    }
     return $pressed;
   }
 }
