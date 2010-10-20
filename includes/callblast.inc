@@ -167,6 +167,9 @@ function callblast_save_voipcalls($list, $node) {
  * Send scheduled call blasts.
  */
 function callblast_run() {
+
+watchdog('debug', "In callblast_run()");
+
   // Check for call blasts that have been scheduled but not sent.
   $sql = "SELECT n.nid, n.vid " 
         ."FROM {node} n " 
@@ -204,6 +207,9 @@ function callblast_run() {
  *  $node, callblast node object.
  */
 function callblast_send($node) {
+
+watchdog('debug', "In callblast_send($node->nid)");
+
   // Save call blast start time.
   $node->field_callblast_start[0]['value'] = time();
 
@@ -250,6 +256,7 @@ function callblast_send($node) {
  */
 function _callblast_send_now($form, $form_state) {
   $node = node_load($form_state['nid']);
+watchdog('debug', "In _callblast_send_now() with nid = " . $form_state['nid']);
   callblast_send($node);
 }
 
@@ -265,6 +272,8 @@ function _callblast_send_now($form, $form_state) {
  *  node to be sent.
  */
 function _callblast_call($callblast_nid, $voipcall_nid) {
+watchdog('debug', "In _callblast_call($callblast_nid, $voipcall_nid)");
+
   $voipcall_node = node_load($voipcall_nid);    
   // set call status to 'calling'
   $callblast_call->voipcall_nid = $voipcall_nid;
@@ -477,6 +486,9 @@ function callblast_get_callblast_nid($voipcall_nid) {
  *  int, node id of callblast being sent
  */
 function callblast_send_next_call($callblast_nid) {
+
+watchdog('debug', "In callblast_send_next_call($callblast_nid)");
+
   // Check queue size.
   $queue_size = variable_get('callblast_queue_size', 10);
   // Check how many calls are currently being called.
@@ -487,8 +499,10 @@ function callblast_send_next_call($callblast_nid) {
     // Get queued voipcall_nid.
     $sql = "SELECT voipcall_nid FROM {callblast_call} WHERE callblast_nid = %d AND status = 'queued' LIMIT 1 ";
     $voipcall_nid = db_result(db_query($sql, $callblast_nid));
-    // Send the next call.
-    _callblast_call($callblast_nid, $voipcall_nid);
+    if($voipcall_nid) {
+      // If the queue is not empty, send the next call.
+      _callblast_call($callblast_nid, $voipcall_nid);
+    }
   }
 
 //TODO QUEUE 5. When there are no more calls in the queue, set callblast to "complete", set end time for callblast here.  

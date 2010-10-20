@@ -325,6 +325,11 @@ function callblast_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
   if ($is_voipcall && $is_callblast_call && $op == 'update') {
     // (c)
     $voipcall = (array)$node;
+
+$n = $voipcall['nid'];
+$s = $voipcall['field_voipcall_status'][0]['value'];
+watchdog('debug', "voipcall update: nid: $n, status: $s");
+
     $call_completed = voipcall_is_hangup($voipcall);
     if ($call_completed) {
       $callblast_call->voipcall_nid = $node->nid;
